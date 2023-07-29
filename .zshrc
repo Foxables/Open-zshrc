@@ -61,6 +61,9 @@ function gits() {
     elif [[ "$1" == "tag" ]] || [[ "$1" == "t" ]];
     then
       git tag "$2" && git push origin "$2"
+    elif [[ "$1" == "switch" ]] || [[ "$1" == "s" ]];
+    then
+      gco "$2" && gip -f
     fi
   elif [[ ! -z "$1" ]] && [[ ! -z "$2" ]] && [[ ! -z "$3" ]];
   then
