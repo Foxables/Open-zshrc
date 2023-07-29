@@ -41,6 +41,8 @@ alias tfd="~/Applications/terraform destroy"
 # SVC
 alias gc="git commit -s"
 alias gp="git push"
+alias gs="git stash"
+alias gsp="git stash pop"
 alias gip="git pull"
 alias gco="git checkout"
 alias gfo="git fetch origin"
@@ -50,14 +52,26 @@ alias gitfucked="git rm -rf . --cached"
 #############################################
 # Functions
 #############################################
-function gt() {
-  if [[ -z "$1" ]];
+function gits() {
+  if [[ ! -z "$1" ]] && [[ ! -z "$2" ]] && [[ -z "$3" ]];
   then
-    echo "Usage: gt <tag>"
-    exit 1
+    if [[ "$1" == "delete" ]] || [[ "$1" == "d" ]];
+    then
+      git branch -D "$2" && git push origin -D "$2"
+    elif [[ "$1" == "tag" ]] || [[ "$1" == "t" ]];
+    then
+      git tag "$2" && git push origin "$2"
+    elif [[ "$1" == "switch" ]] || [[ "$1" == "s" ]];
+    then
+      gco "$2" && gip -f
+    fi
+  elif [[ ! -z "$1" ]] && [[ ! -z "$2" ]] && [[ ! -z "$3" ]];
+  then
+    if [[ "$1" == "new" ]] || [[ "$1" == "n" ]];
+    then
+      gs && gco "$2" && gip && gco -b "$3" && gsp
+    fi
   fi
-
-  git tag $1 && git push origin $1
 }
 
 function checkForOpenZSHRCUpdate() {
