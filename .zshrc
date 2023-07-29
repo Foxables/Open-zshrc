@@ -39,6 +39,7 @@ alias tfa="~/Applications/terraform apply"
 alias tfd="~/Applications/terraform destroy"
 
 # SVC
+alias ga="git add"
 alias gc="git commit -s"
 alias gp="git push"
 alias gs="git stash"
@@ -57,7 +58,7 @@ function gits() {
   then
     if [[ "$1" == "delete" ]] || [[ "$1" == "d" ]];
     then
-      git branch -D "$2" && git push origin -D "$2"
+      git branch -D "$2" && git push origin -d "$2"
     elif [[ "$1" == "tag" ]] || [[ "$1" == "t" ]];
     then
       git tag "$2" && git push origin "$2"
