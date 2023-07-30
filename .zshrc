@@ -86,7 +86,7 @@ function checkForOpenZSHRCUpdate() {
   fi
 
   stat=$(git -C "$FOXABLES_PATH" fetch origin 2>&1)
-  if [[ ! -z "$stat" ]];
+  if [[ ! -z "$stat" ]] && [[ ! "$stat" =~ "fatal" ]] && [[ ! "$stat" =~ "not found" ]];
   then
     read -p "A new update for Foxables Open-ZSHRC is available. Would you like to update? [y/N] " -n 1 -r
 
@@ -127,6 +127,7 @@ function systime() {
       echo "$gtime"
       return
     else
+      # Mac OS X, if gdate is not installed you can't get nanoseconds.
       echo "${time:0:-1}000000000"
       return
     fi
