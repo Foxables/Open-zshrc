@@ -18,6 +18,9 @@ COMPLETION_WAITING_DOTS="true"
 CMD_TIMER_COLOR="magenta"
 CMD_TIMER="true"
 
+DEFAULT_SSH_USER="root"
+DEFAULT_SSH_KEY="~/.ssh/id_rsa"
+
 plugins=(git rails ruby gem emoji encode64 git-extras)
 
 source $ZSH/oh-my-zsh.sh
@@ -209,6 +212,50 @@ function preexec() {
   fi
 
   timerStart=$cur
+}
+
+function c() {
+  # SSH Connections.
+  local USER="$DEFAULT_SSH_USER"
+  FALLBACK_USERS=( ec2-user ubnt ubuntu root $(whoami) )
+
+  if [[ -z "$1" ]];
+  then
+    echo "Usage: c <host> [user] [key]"
+    exit 1
+  fi
+  local HOST="$1"
+
+  if [[ ! -z "$2" ]];
+  then
+    USER="$2"
+  fi
+
+  local KEY=""
+  if [[ ! -z "$DEFAULT_SSH_KEY" ]] && [[ -f "$DEFAULT_SSH_KEY" ]];
+  then
+    KEY="-i '$DEFAULT_SSH_KEY'"
+  fi
+
+  if [[ ! -z "$3" ]] && [[ -f "$3" ]];
+  then
+    KEY="-i $3"
+  fi
+
+  local RES=$(ssh $USER@"$HOST" $KEY "uname -mrs")
+  if [[ "$RES" =~ "Permission denied" ]];
+  then
+    for i in "${FALLBACK_USERS[@]}"
+    do
+      RES=$(ssh $i@"$HOST" $KEY "uname -mrs")
+      if [[ ! "$RES" =~ "Permission denied" ]];
+      then
+        USER="$i"
+        break
+      fi
+    done
+  fi
+  ssh $USER@"$HOST" $KEY
 }
 
 function precmd() {
