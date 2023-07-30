@@ -5,7 +5,7 @@
 #####################
 PWD=$(pwd)
 REPO=""
-DRY_RUN=false
+DRY_RUN="false"
 LOG_FILE="$PWD/install.log" # Set to empty string to disable logging.
 
 #####################
@@ -28,7 +28,7 @@ NC='\033[0m' # No Color
 #####################
 function cloneRepo() {
     reportStep "Cloning repo..."
-    if [[ $DRY_RUN ]];
+    if [[ $DRY_RUN == "true" ]];
     then
         reportStep "Dry run, skipping clone."
         return
