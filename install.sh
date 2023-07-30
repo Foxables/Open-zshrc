@@ -28,7 +28,7 @@ NC='\033[0m' # No Color
 #####################
 function cloneRepo() {
     reportStep "Cloning repo..."
-    if [[ $DRY_RUN == "true" ]];
+    if [[ "$DRY_RUN" == "true" ]];
     then
         reportStep "Dry run, skipping clone."
         return
