@@ -33,6 +33,11 @@ source $ZSH/oh-my-zsh.sh
 # General
 alias 7zip="~/Scripts/7zz"
 alias hist="history -i"
+alias k="kubectl"
+alias d="docker"
+alias dc="docker-compose"
+alias py="python3"
+
 
 # IaC
 alias terraform="~/Applications/terraform"
@@ -52,6 +57,9 @@ alias gco="git checkout"
 alias gfo="git fetch origin"
 alias gsync="git pull origin/master"
 alias gitfucked="git rm -rf . --cached"
+alias gitbig="git rev-list --objects --all | git cat-file --batch-check='%(objecttype) %(objectname) %(objectsize) %(rest)' | sed -n 's/^blob //p' | sort -r --numeric-sort --key=2 | cut -c 1-12,41- | $(command -v gnumfmt || echo numfmt) --field=2 --to=iec-i --suffix=B --padding=7 --round=nearest | head";
+alias gitbigall="git rev-list --objects --all | git cat-file --batch-check='%(objecttype) %(objectname) %(objectsize) %(rest)' | sed -n 's/^blob //p' | sort -r --numeric-sort --key=2 | cut -c 1-12,41- | $(command -v gnumfmt || echo numfmt) --field=2 --to=iec-i --suffix=B --padding=7 --round=nearest";
+alias gprune="git branch --v | grep "\[gone\]" | awk '{print $1}' | xargs git branch -D"
 
 #############################################
 # Functions
