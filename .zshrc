@@ -96,8 +96,15 @@ function checkForOpenZSHRCUpdate() {
     return
   fi
 
-  stat=$(git -C "$FOXABLES_PATH" fetch origin 2>&1)
-  if [[ ! -z "$stat" ]] && [[ ! "$stat" =~ "fatal" ]] && [[ ! "$stat" =~ "not found" ]];
+  updt=$(git -C "$FOXABLES_PATH" remote update 2>&1)
+  if [[ ! -z "$updt" ]] && [[ "$updt" =~ "fatal" ]];
+  then
+    echo "Foxables Open-ZSHRC encountered an error when checking for an update."
+    return
+  fi
+
+  stat=$(git -C "$FOXABLES_PATH" status -uno 2>&1)
+  if [[ ! -z "$stat" ]] && [[ ! "$stat" =~ "fatal" ]] && [[ ! "$stat" =~ "not found" ]] && [[ ! "$stat" =~ "Your branch is up to date with" ]];
   then
     read -p "A new update for Foxables Open-ZSHRC is available. Would you like to update? [y/N] " -n 1 -r
 
@@ -105,10 +112,12 @@ function checkForOpenZSHRCUpdate() {
     then
       git -C "$FOXABLES_PATH" pull origin master
       echo "Updated! Please run 'source ~/.zshrc' again."
-    else
       echo "$FOXABLES_PATH" > "$HOME/.foxables-zshrc.path"
       echo "$NOW" >> "$HOME/.foxables-zshrc.path"
     fi
+  else
+    echo "$FOXABLES_PATH" > "$HOME/.foxables-zshrc.path"
+    echo "$NOW" >> "$HOME/.foxables-zshrc.path"
   fi
 }
 
