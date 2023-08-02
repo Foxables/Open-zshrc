@@ -112,7 +112,7 @@ function checkForOpenZSHRCUpdate() {
     if [[ $REPLY =~ ^[Yy]$ ]];
     then
       echo "Updating Foxables Open-ZSHRC..."
-      gitOut=$(git -C "$FOXABLES_PATH" pull origin master)
+      gitOut=$(git -C "$FOXABLES_PATH" pull origin master 2>&1)
       echo "Updated! Please run 'source ~/.zshrc' again."
       echo "$FOXABLES_PATH" > "$HOME/.foxables-zshrc.path"
       echo "$NOW" >> "$HOME/.foxables-zshrc.path"
