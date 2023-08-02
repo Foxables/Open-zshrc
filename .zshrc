@@ -90,7 +90,7 @@ function checkForOpenZSHRCUpdate() {
   local FOXABLES_PATH=$(head -n 1 "$HOME/.foxables-zshrc.path")
   local FOXABLES_UPDATED=$(tail -n 1 "$HOME/.foxables-zshrc.path")
   local NOW=$(date +%s)
-  local EXPIRE=$(expr $FOXABLES_UPDATED + 604800)
+  local EXPIRE=$(expr $FOXABLES_UPDATED + 86400)
   if [[ $NOW -lt $EXPIRE ]];
   then
     return
@@ -106,14 +106,18 @@ function checkForOpenZSHRCUpdate() {
   stat=$(git -C "$FOXABLES_PATH" status -uno 2>&1)
   if [[ ! -z "$stat" ]] && [[ ! "$stat" =~ "fatal" ]] && [[ ! "$stat" =~ "not found" ]] && [[ ! "$stat" =~ "Your branch is up to date with" ]];
   then
-    read -p "A new update for Foxables Open-ZSHRC is available. Would you like to update? [y/N] " -n 1 -r
+    echo "A new update for Foxables Open-ZSHRC is available. Would you like to update? [y/N]"
+    read REPLY
 
     if [[ $REPLY =~ ^[Yy]$ ]];
     then
-      git -C "$FOXABLES_PATH" pull origin master
+      echo "Updating Foxables Open-ZSHRC..."
+      gitOut=$(git -C "$FOXABLES_PATH" pull origin master)
       echo "Updated! Please run 'source ~/.zshrc' again."
       echo "$FOXABLES_PATH" > "$HOME/.foxables-zshrc.path"
       echo "$NOW" >> "$HOME/.foxables-zshrc.path"
+    else
+      echo "Skipping update."
     fi
   else
     echo "$FOXABLES_PATH" > "$HOME/.foxables-zshrc.path"
