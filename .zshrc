@@ -87,6 +87,11 @@ function gits() {
 }
 
 function checkForOpenZSHRCUpdate() {
+  if [[ ! -f "$HOME/.foxables-zshrc.path" ]]; then
+    echo "$HOME/.foxables-zshrc.path was not found. Please remove the current ~/.zshrc file and re-install Foxables Open-ZSHRC."
+    return
+  fi
+
   local FOXABLES_PATH=$(head -n 1 "$HOME/.foxables-zshrc.path")
   local FOXABLES_UPDATED=$(tail -n 1 "$HOME/.foxables-zshrc.path")
   local NOW=$(date +%s)
