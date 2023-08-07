@@ -23,5 +23,7 @@ In order to install and maintain the Foxables' Open .zshrc, you must;
 
 If you like this and want to support Foxables, please share our blog [Foxables.IO](https://foxables.io).
 
+## Customisations
+Simply create the directory `zshrc.d` in your `$ZSH` path, and add each customisation to a bash file. If this directory exists, then Foxables Open-ZSHRC will automatically load in your customisations.
 
 ***Powered By Paws Defacing Keyboards***

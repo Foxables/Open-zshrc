@@ -31,7 +31,6 @@ source $ZSH/oh-my-zsh.sh
 #############################################
 
 # General
-alias 7zip="~/Scripts/7zz"
 alias hist="history -i"
 alias k="kubectl"
 alias d="docker"
@@ -39,12 +38,6 @@ alias dc="docker-compose"
 alias py="python3"
 
 
-# IaC
-alias terraform="~/Applications/terraform"
-alias tfp="~/Applications/terraform plan"
-alias tfi="~/Applications/terraform init"
-alias tfa="~/Applications/terraform apply"
-alias tfd="~/Applications/terraform destroy"
 
 # SVC
 alias ga="git add"
@@ -307,8 +300,12 @@ function precmd() {
   fi
 }
 
-# Disable mouse accelleration on mac.
-defaults write .GlobalPreferences com.apple.mouse.scaling -1
+function sourcePlugins() {
+  if [[ -d "$ZSH/.zshrc.d/" ]];
+  then
+    source "$ZSH~/.zshrc.d/*.sh"
+  fi
+}
 
 # NVM
 export NVM_DIR="$HOME/.nvm"
@@ -316,3 +313,4 @@ export NVM_DIR="$HOME/.nvm"
   [ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
 
 checkForOpenZSHRCUpdate
+sourcePlugins
