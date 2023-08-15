@@ -37,6 +37,8 @@ alias d="docker"
 alias dc="docker-compose"
 alias py="python3"
 
+# Rewrite to function similar to `c`
+alias create_tunnel="ssh ec2-user@10.0.10.123 -L 0.0.0.0:3306:10.0.0.140:3306"
 
 
 # SVC
@@ -303,7 +305,7 @@ function precmd() {
 function sourcePlugins() {
   if [[ -d "$ZSH/.zshrc.d/" ]];
   then
-    source "$ZSH~/.zshrc.d/*.sh"
+    source "$ZSH/.zshrc.d/*.sh"
   fi
 }
 
