@@ -305,7 +305,7 @@ function precmd() {
 function sourcePlugins() {
   if [[ -d "$ZSH/.zshrc.d/" ]];
   then
-    source "$ZSH/.zshrc.d/*.sh"
+    source $ZSH/.zshrc.d/*.sh
   fi
 }
 
