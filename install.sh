@@ -33,7 +33,7 @@ function cloneRepo() {
         reportStep "Dry run, skipping clone."
         return
     fi
-    RES=$(git clone git@github.com:Foxables/Open-zshrc.git "$PWD/$REPO" 2>&1)
+    RES=$(git clone https://github.com/Foxables/Open-zshrc.git "$PWD/$REPO" 2>&1)
     if [[ "$RES" == *"fatal"* ]];
     then
         reportStep "Failed to clone repo."
